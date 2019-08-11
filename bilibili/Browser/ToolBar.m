@@ -45,7 +45,7 @@ extern NSString *sharedURLFieldString;
 }
 
 
-- (void)finalize {
+- (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -128,6 +128,8 @@ extern NSString *sharedURLFieldString;
         return;
     }else if([url containsString:@"http://"] || [url containsString:@"https://"]){
         [wv setURL:url];
+    }else if([url containsString:@"bilimac-newtab://"]){
+        [wv setURL:[url stringByReplacingOccurrencesOfString:@"bilimac-newtab://" withString:@"http://_bilimac_newtab.loli.video/"]];
     }else{
         [wv setURL:[NSString stringWithFormat:@"http://%@",url]];
     }
